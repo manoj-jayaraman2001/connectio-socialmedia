@@ -3,11 +3,14 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { setLogin } from "../../app/index";
+import { useDispatch } from "react-redux";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   async function login(email, password) {
     const savedUserResponse = await fetch(
@@ -21,8 +24,14 @@ const Login = () => {
       }
     );
     const verifyUser = await savedUserResponse.json();
-    // console.log(verifyUser);
+    console.log(verifyUser);
     if (verifyUser) {
+      dispatch(
+        setLogin({
+          user: verifyUser.user,
+          token: verifyUser.token,
+        })
+      );
       navigate("/home");
     }
   }
