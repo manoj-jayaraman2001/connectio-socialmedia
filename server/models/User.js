@@ -30,8 +30,6 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    friendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    sentRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     location: String,
     occupation: String,
     viewedProfile: Number,

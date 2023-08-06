@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
-import authReducer from "./app/index.js";
+import authReducer from "./State/index.js";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import {

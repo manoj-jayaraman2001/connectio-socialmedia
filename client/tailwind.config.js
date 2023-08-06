@@ -10,7 +10,8 @@ export default {
       fontFamily: {
         jsans: ['Josefin Sans', 'sans-serif'],
         LatoFont: ['Lato','Monsterrat', 'sans-serif'],
-        nunito: ['Nunito Sans', 'sans-serif']
+        nunito: ['Nunito Sans', 'sans-serif'],
+        mon: ['Monsterrat', 'sans-serif']
       }
     },
   },

@@ -12,10 +12,11 @@ import {
   HomeModernIcon,
 } from "@heroicons/react/24/solid";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import ProfilePic from "../../components/ProfilePic";
 const products = [
   { name: "Update Profile", href: "#", icon: UserCircleIcon },
   { name: "Friend Requests", href: "#", icon: UserGroupIcon },
@@ -28,8 +29,11 @@ function classNames(...classes) {
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const fullName = `${user.firstName} ${user.lastName}`;
   const profileImg = user.picturePath;
+
+  
   return (
     <header className="bg-white">
       <nav
@@ -53,31 +57,55 @@ export default function Navbar() {
           </button>
         </div>
         <Popover.Group className="hidden lg:flex items-end lg:gap-x-12 ml-36">
-          <NavLink title="Home">
-            <HomeModernIcon className="h-6 w-6 text-gray-400 hover:text-primary" />
+          <NavLink to="/home" title="Home">
+            {({ isActive, isPending }) => {
+              return (
+                <HomeModernIcon
+                  className={`h-6 w-6 ${
+                    isActive ? "text-primary" : "text-gray-400"
+                  }`}
+                />
+              );
+            }}
           </NavLink>
 
-          <NavLink title="Messages">
-            <ChatBubbleLeftEllipsisIcon className="h-6 w-6 text-gray-400 hover:text-primary" />
+          <NavLink to="/messages" title="Messages">
+            {({ isActive, isPending }) => {
+              return (
+                <ChatBubbleLeftEllipsisIcon
+                  className={`h-6 w-6 ${
+                    isActive ? "text-primary" : "text-gray-400"
+                  }`}
+                />
+              );
+            }}
           </NavLink>
-          <NavLink title="Notifications">
-            <BellAlertIcon className="h-6 w-6 text-gray-400 hover:text-primary" />
+          <NavLink to="/home/notifications" title="Notifications">
+            {({ isActive, isPending }) => {
+              return (
+                <BellAlertIcon
+                  className={`h-6 w-6 ${
+                    isActive ? "text-primary" : "text-gray-400"
+                  }`}
+                />
+              );
+            }}
           </NavLink>
-          <NavLink title="help">
-            <QuestionMarkCircleIcon className="h-6 w-6 text-gray-400 hover:text-primary" />
+          <NavLink to="/home/help" title="Help">
+            {({ isActive, isPending }) => {
+              return (
+                <QuestionMarkCircleIcon
+                  className={`h-6 w-6 ${
+                    isActive ? "text-primary" : "text-gray-400"
+                  }`}
+                />
+              );
+            }}
           </NavLink>
 
           <Popover className="relative">
             <Popover.Button className="flex items-center gap-x-1  leading-6 ml-12 outline-none">
-              {profileImg ? (
-                <img
-                  src={`http://localhost:3001/assets/${profileImg}`}
-                  alt="img"
-                  className="rounded-full h-6 w-6"
-                />
-              ) : (
-                <UserCircleIcon className="h-6 w-6 text-gray-400" />
-              )}
+              <ProfilePic dimension={"h-6 w-6"} picturePath={profileImg} />
               <span className="text-base text-gray-900 font-LatoFont">
                 {fullName}
               </span>
@@ -130,7 +158,7 @@ export default function Navbar() {
             <MoonIcon className="h-5 w-5 text-black mr-16 mt-1 cursor-pointer" />
           </div>
           <Link
-            to="/login"
+            onClick={()=>{dispatch(setLogout())}}
             className="text-sm font-semibold leading-6 text-primary"
           >
             Log out <span aria-hidden="true">&rarr;</span>
@@ -210,7 +238,7 @@ export default function Navbar() {
               </div>
               <div className="py-6">
                 <Link
-                  to="/login"
+                  onClick={()=>{dispatch(setLogout())}}
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Log out

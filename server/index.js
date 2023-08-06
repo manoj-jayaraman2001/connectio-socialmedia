@@ -9,8 +9,10 @@ const helmet = require("helmet");
 // const {updateProfile} = require('./controllers/user.js')
 const authRoutes = require("./routes/auth.js");
 const userRoutes = require("./routes/user.js");
+const postRoutes = require("./routes/posts.js")
 const verifyToken = require("./middlewares/auth.js");
 const { createPost } = require("./controllers/posts.js");
+
 // const User = require("./models/User.js");
 // const Post = require("./models/Post.js")
 // const { users, posts } = require("./data/index.js");
@@ -44,7 +46,7 @@ app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
-
+app.use('/posts', postRoutes);
 // Mongoose setup
 
 const PORT = process.env.PORT || 6000;
@@ -60,7 +62,7 @@ mongoose
     });
     // ADD DATA ONE TIME
     // User.insertMany(users);
-    // Post.insertMany(posts);
+    //  Post.insertMany(posts);
   })
   .catch((error) => {
     console.log(error);
