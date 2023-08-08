@@ -10,6 +10,7 @@ const helmet = require("helmet");
 const authRoutes = require("./routes/auth.js");
 const userRoutes = require("./routes/user.js");
 const postRoutes = require("./routes/posts.js")
+const friendRoutes = require('./routes/friends.js')
 const verifyToken = require("./middlewares/auth.js");
 const { createPost } = require("./controllers/posts.js");
 
@@ -47,6 +48,7 @@ app.post("/posts", verifyToken, upload.single("picture"), createPost);
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use('/posts', postRoutes);
+app.use('/friends', friendRoutes)
 // Mongoose setup
 
 const PORT = process.env.PORT || 6000;

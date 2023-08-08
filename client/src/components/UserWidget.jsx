@@ -1,5 +1,6 @@
 
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   MapPinIcon,
   BriefcaseIcon,
@@ -10,6 +11,8 @@ const UserWidget = () => {
   const userInfo = useSelector((state) => state.user);
   const fullName = `${userInfo.firstName} ${userInfo.lastName}`;
   const profileImg = userInfo.picturePath
+
+  const navigate = useNavigate()
   return (
     <div className="bg-white p-4 rounded-lg shadow-md w-max">
       <div className="flex items-center gap-6">
@@ -22,7 +25,7 @@ const UserWidget = () => {
           </span>
           <span>Friends: {userInfo.friends.length}</span>
         </div>
-        <div className="mb-2" title="update profile">
+        <div className="mb-2" title="update profile" onClick={()=>{navigate('/home/update-profile')}}>
           <Cog8ToothIcon className="h-6 w6 text-primary cursor-pointer" />
         </div>
       </div>

@@ -50,9 +50,9 @@ const getUserPosts = async (req, res) => {
 
 const likePost = async (req, res) => {
   try {
-    const { postId } = req.params;
+    const { id } = req.params;
     const { userId } = req.body;
-    const post = await Post.findById(postId);
+    const post = await Post.findById(id);
     const isLiked = post.likes.get(userId);
     if (isLiked) {
       post.likes.delete(userId);
@@ -60,7 +60,7 @@ const likePost = async (req, res) => {
       post.likes.set(userId, true);
     }
     const updatedPost = await Post.findByIdAndUpdate(
-      postId,
+      id,
       { likes: post.likes },
       { new: true }
     );

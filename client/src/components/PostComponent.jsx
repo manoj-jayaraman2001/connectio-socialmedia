@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../State";
 import Friend from "../components/Friend";
-
+import { HeartIcon, ChatBubbleOvalLeftIcon, ShareIcon} from "@heroicons/react/24/solid";
 const PostWidget = ({
   postId,
   postUserId,
@@ -50,32 +50,36 @@ const PostWidget = ({
           src={`http://localhost:3000/assets/${picturePath}`}
         />
       )}
-      <div className="mt-1">
-        <div gap="1rem">
-          <div gap="0.3rem">
+      <div className="flex place-content-between mt-1">
+        <div className="flex gap-4">
+          <div className="flex gap-1">
             <button
               className={`${
                 isLiked ? "text-primary" : "text-gray-500"
               } hover:text-primary`}
               onClick={patchLike}
             >
-              {isLiked ? "❤️" : "🤍"}
+              {isLiked ? (
+                <HeartIcon className="text-primary h-5 w-5" />
+              ) : (
+                <HeartIcon className="text-gray-400 h-5 w-5" />
+              )}
             </button>
             <span>{likeCount}</span>
           </div>
 
-          <div gap="0.3rem">
+          <div className="flex gap-1">
             <button
               className="text-gray-500 hover:text-primary"
               onClick={() => setIsComments(!isComments)}
             >
-              💬
+              <ChatBubbleOvalLeftIcon className="h-5 w-5"/>
             </button>
             <span>{comments.length}</span>
           </div>
         </div>
 
-        <button className="text-gray-500 hover:text-primary">📤</button>
+        <button className="text-primary"><ShareIcon className="h-5 w-5"/></button>
       </div>
       {isComments && (
         <div className="mt-2">

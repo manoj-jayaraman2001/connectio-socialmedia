@@ -30,8 +30,15 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    location: String,
-    occupation: String,
+
+    location: {
+      type: String,
+      default: ""
+    },
+    occupation: {
+      type: String,
+      default: ""
+    },
     viewedProfile: Number,
     impressions: Number,
     relationStatus: {

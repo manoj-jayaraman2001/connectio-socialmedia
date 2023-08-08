@@ -32,8 +32,6 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const fullName = `${user.firstName} ${user.lastName}`;
   const profileImg = user.picturePath;
-
-  
   return (
     <header className="bg-white">
       <nav
@@ -57,7 +55,7 @@ export default function Navbar() {
           </button>
         </div>
         <Popover.Group className="hidden lg:flex items-end lg:gap-x-12 ml-36">
-          <NavLink to="/home" title="Home">
+          <NavLink  to="/home/feed" title="Home">
             {({ isActive, isPending }) => {
               return (
                 <HomeModernIcon
@@ -69,7 +67,7 @@ export default function Navbar() {
             }}
           </NavLink>
 
-          <NavLink to="/messages" title="Messages">
+          <NavLink to="/home/messages" title="Messages">
             {({ isActive, isPending }) => {
               return (
                 <ChatBubbleLeftEllipsisIcon
