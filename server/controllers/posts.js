@@ -6,7 +6,7 @@ const User = require("../models/User");
 
 const createPost = async (req, res) => {
   try {
-    const { userId, description, postMediaPath } = req.body;
+    const { userId, description, picturePath } = req.body;
     const user = await User.findById(userId);
     const newPost = new Post({
       userId,

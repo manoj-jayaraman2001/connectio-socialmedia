@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import { useDropzone } from "react-dropzone";
 import {
   PhotoIcon,
   FilmIcon,
   PaperClipIcon,
   MicrophoneIcon,
-  EllipsisHorizontalCircleIcon,
   TrashIcon,
   PencilIcon,
-} from "@heroicons/react/24/solid";
+} from "@heroicons/react/24/outline";
 import ProfilePic from "./ProfilePic";
 
 const CreatePost = ({ picturePath }) => {
@@ -18,6 +18,17 @@ const CreatePost = ({ picturePath }) => {
   const handlePost = async () => {
     // Your post handling logic here
   };
+
+  const onDrop = (acceptedFiles) => {
+    const uploadedImage = acceptedFiles[0];
+    setImage(uploadedImage);
+  };
+
+  const { getRootProps, getInputProps } = useDropzone({
+    maxFiles: 1,
+    'image/png': ['.png','.jpg'],
+    onDrop,
+  });
 
   return (
     <div className="p-4 border rounded bg-white">
@@ -37,8 +48,7 @@ const CreatePost = ({ picturePath }) => {
       {/* Dropzone */}
       {isImage && (
         <div className="border rounded p-4 mt-4">
-          {/* Dropzone component */}
-          <div className="border-dashed border-primary-500 p-4 w-full cursor-pointer hover:bg-gray-200">
+          <div {...getRootProps()} className="border-dashed border-primary-500 p-4 w-full cursor-pointer hover:bg-gray-200">
             {image ? (
               <div className="flex items-center justify-between">
                 <p>{image.name}</p>
@@ -47,6 +57,7 @@ const CreatePost = ({ picturePath }) => {
             ) : (
               <p>Add Image Here</p>
             )}
+            <input {...getInputProps()} />
           </div>
           {image && (
             <button

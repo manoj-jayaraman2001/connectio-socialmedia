@@ -11,10 +11,10 @@ import { useNavigate } from "react-router-dom";
 import Messages from "../Messages";
 
 const Home = () => {
-    const navigate = useNavigate()
-    useEffect(()=>{
-        navigate('/home/feed')
-    }, [])
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/home/feed");
+  }, []);
   return (
     <div className="bg-bgcolor">
       <Navbar />
@@ -23,7 +23,9 @@ const Home = () => {
           <UserWidget />
           <FriendListComponent />
         </div>
+
         <Outlet />
+
         <div className="hidden xl:block max-w-sm">
           <AdvertComponent />
         </div>

@@ -27,7 +27,8 @@ const UpdateProfile = () => {
   };
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: "image/*",
+    maxFiles: 1,
+    accept: { "image/png": [".png", ".jpg"] },
     onDrop,
   });
 
@@ -64,7 +65,7 @@ const UpdateProfile = () => {
   }
 
   return (
-    <div className="p-6 bg-white rounded-md ">
+    <div className="bg-white rounded-md sm:w-full  p-6 lg:w-1/3">
       <h2 className="text-2xl font-semibold mb-4">Update Profile</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
