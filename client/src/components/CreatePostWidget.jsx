@@ -8,15 +8,40 @@ import {
   TrashIcon,
   PencilIcon,
 } from "@heroicons/react/24/outline";
+import { useSelector, useDispatch } from "react-redux";
 import ProfilePic from "./ProfilePic";
-
+import { setPosts } from "../State";
 const CreatePost = ({ picturePath }) => {
   const [isImage, setIsImage] = useState(false);
   const [image, setImage] = useState(null);
   const [post, setPost] = useState("");
+  const userId = useSelector((state) => state.user._id);
+  const token = useSelector((state) => state.token);
+  const dispatch = useDispatch();
 
   const handlePost = async () => {
-    // Your post handling logic here
+    const formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("description", post);
+    formData.append("picture", image);
+    formData.append("picturePath", image.name);
+
+    const postCreated = await fetch("http://localhost:3000/posts/create-post", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    const posts = await postCreated.json();
+    if (posts) {
+      dispatch(setPosts({ posts }));
+      setImage(null);
+      setPost("");
+    } else {
+      console.log("error");
+    }
   };
 
   const onDrop = (acceptedFiles) => {
@@ -26,7 +51,7 @@ const CreatePost = ({ picturePath }) => {
 
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
-    'image/png': ['.png','.jpg'],
+    "image/png": [".png", ".jpg"],
     onDrop,
   });
 
@@ -34,7 +59,7 @@ const CreatePost = ({ picturePath }) => {
     <div className="p-4 border rounded bg-white">
       <div className="flex items-center space-x-4">
         {/* UserImage component */}
-        <ProfilePic dimension={'h-10 w-10'}/>
+        <ProfilePic dimension={"h-10 w-10"} />
 
         <input
           type="text"
@@ -48,7 +73,10 @@ const CreatePost = ({ picturePath }) => {
       {/* Dropzone */}
       {isImage && (
         <div className="border rounded p-4 mt-4">
-          <div {...getRootProps()} className="border-dashed border-primary-500 p-4 w-full cursor-pointer hover:bg-gray-200">
+          <div
+            {...getRootProps()}
+            className="border-dashed border-primary-500 p-4 w-full cursor-pointer hover:bg-gray-200"
+          >
             {image ? (
               <div className="flex items-center justify-between">
                 <p>{image.name}</p>
@@ -62,7 +90,7 @@ const CreatePost = ({ picturePath }) => {
           {image && (
             <button
               onClick={() => setImage(null)}
-              className="w-12 h-12 rounded-full bg-red-500 text-white"
+              className="w-12 h-12 rounded-full  text-red"
             >
               <TrashIcon className="w-5 h-5" />
             </button>

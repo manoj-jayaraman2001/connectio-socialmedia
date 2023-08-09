@@ -16,14 +16,16 @@ const UpdateProfile = () => {
     lastName: userData.lastName,
     location: userData.location,
     occupation: userData.occupation,
+    picture: null,
+    picturePath: userData.picturePath,
     relationshipStatus: userData.relationshipStatus,
   });
-
+  console.log(userData)
   const onDrop = (acceptedFiles) => {
     // Handle the uploaded profile picture here
     const file = acceptedFiles[0];
     // You can set the profilePic state to the file or its URL
-    setFormData({ ...formData, profilePic: file });
+    setFormData({ ...formData, picture: file, picturePath: file.name });
   };
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -103,9 +105,9 @@ const UpdateProfile = () => {
             className="border border-gray-300 rounded p-2 cursor-pointer"
           >
             <input {...getInputProps()} />
-            {formData.profilePic ? (
+            {formData.picture ? (
               <img
-                src={URL.createObjectURL(formData.profilePic)}
+                src={URL.createObjectURL(formData.picture)}
                 alt="Profile"
                 className="w-20 h-20 object-cover rounded-full"
               />

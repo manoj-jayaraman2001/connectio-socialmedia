@@ -13,7 +13,7 @@ const postRoutes = require("./routes/posts.js")
 const friendRoutes = require('./routes/friends.js')
 const verifyToken = require("./middlewares/auth.js");
 const { createPost } = require("./controllers/posts.js");
-
+const {updateProfile} = require('./controllers/user.js')
 // const User = require("./models/User.js");
 // const Post = require("./models/Post.js")
 // const { users, posts } = require("./data/index.js");
@@ -36,13 +36,14 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
+    console.log(file.originalname)
   },
 });
 const upload = multer({ storage });
 
 /* routes with file uploads*/
-// app.post("/user/update-profile", upload.single("picture"), updateProfile)
-app.post("/posts", verifyToken, upload.single("picture"), createPost);
+app.patch("/users/:id/update-profile", upload.single("picture"), updateProfile)
+app.post("/posts/create-post", verifyToken, upload.single("picture"), createPost);
 // routes
 
 app.use("/auth", authRoutes);

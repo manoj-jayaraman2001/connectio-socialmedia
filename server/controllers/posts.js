@@ -6,6 +6,7 @@ const User = require("../models/User");
 
 const createPost = async (req, res) => {
   try {
+    console.log(req.body)
     const { userId, description, picturePath } = req.body;
     const user = await User.findById(userId);
     const newPost = new Post({
@@ -15,7 +16,7 @@ const createPost = async (req, res) => {
       location: user.location,
       description,
       userPicturePath: user.picturePath,
-      postMediaPath,
+      picturePath,
       likes: {},
       comments: [],
     });

@@ -11,9 +11,10 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const id = useSelector((state) => state.user._id);
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
-  const isFriend = friends.find((friend) => friend._id === friendId);
+  const isFriend = friends.includes(friendId)
   const [isLoading, setLoading] = useState(false)
   const FriendIconComponent = () => {
+    if(id === friendId) return <></>
     if (isLoading) return <DotLoader/>
     if (isFriend) {
       return <UserMinusIcon className="h-7 w-7 text-primary" />;

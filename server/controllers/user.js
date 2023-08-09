@@ -34,8 +34,8 @@ const getUserFriends = async (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     const { id } = req.params;
-    const { _id, picturePath, ...updatedFields } = req.body;
-
+    const {...updatedFields} = req.body;
+    console.log(updatedFields)
     const updatedProfile = await User.findByIdAndUpdate(
       id,
       { $set: updatedFields }, // Update only the provided fields
