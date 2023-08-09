@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { setLogin } from "../../State/index";
 import { useDispatch } from "react-redux";
+import DisplayMessage from "../../components/DisplayMessage";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [showMessage, setMessage] = useState(null)
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -24,8 +25,7 @@ const Login = () => {
       }
     );
     const verifyUser = await savedUserResponse.json();
-    console.log(verifyUser);
-    if (verifyUser) {
+    if (!verifyUser.message) {
       dispatch(
         setLogin({
           user: verifyUser.user,
@@ -33,7 +33,11 @@ const Login = () => {
         })
       );
       navigate("/home");
+    }else{
+      setMessage(verifyUser.message)
     }
+      
+    
   }
   function handleLogin(event) {
     event.preventDefault();
@@ -120,6 +124,7 @@ const Login = () => {
           </p>
         </div>
       </div>
+      {showMessage && <DisplayMessage message={showMessage} setMessage={setMessage}/>}
     </div>
   );
 };
