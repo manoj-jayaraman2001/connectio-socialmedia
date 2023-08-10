@@ -53,13 +53,13 @@ const Login = () => {
             Connectio
           </p>
           <p className="mb-6">Login to your Account</p>
-          <form className="flex flex-col font-nunito gap-2">
+          <form className="flex flex-col font-nunito gap-2" onSubmit={handleLogin}>
             <label className="text-sm" htmlFor="email">
               Email
             </label>
             <input
               className="p-2 border border-gray-300 rounded outline-primary"
-              type="text"
+              type="email"
               id="email"
               placeholder="Enter Your Email"
               value={email}
@@ -103,7 +103,7 @@ const Login = () => {
             </Link>
 
             <button
-              onClick={handleLogin}
+              type="submit"
               className="bg-primary hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow w-40 mt-6 mx-auto"
             >
               Login

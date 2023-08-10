@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import { useNavigate } from "react-router-dom";
+import DisplayMessage from "../../components/DisplayMessage";
 const Signup = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -11,6 +12,7 @@ const Signup = () => {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [showMessage, setMessage] = useState(null)
   const navigate = useNavigate();
   function handleChange(event) {
     const { name, value } = event.target;
@@ -31,9 +33,11 @@ const Signup = () => {
       }
     );
     const savedUser = await savedUserResponse.json();
-    console.log(savedUser);
-    if (savedUser) {
+    console.log(savedUser)
+    if (!savedUser.error) {
       navigate("/");
+    }else{
+      setMessage(savedUser.error)
     }
   }
 
@@ -51,7 +55,7 @@ const Signup = () => {
             Connectio
           </p>
           <p className="mb-6">Create your Account</p>
-          <form className="flex flex-col font-nunito gap-2">
+          <form className="flex flex-col font-nunito gap-2" onSubmit={handleSignup}>
             <label className="text-sm" htmlFor="firstName">
               First Name
             </label>
@@ -83,7 +87,7 @@ const Signup = () => {
             </label>
             <input
               className="p-2 border border-gray-300 rounded outline-primary"
-              type="text"
+              type="email"
               id="email"
               name="email"
               placeholder="Enter Your Email"
@@ -118,7 +122,7 @@ const Signup = () => {
             </div>
             <button
               type="submit"
-              onClick={handleSignup}
+              // onClick={handleSignup}
               className="bg-primary hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow w-40 mt-6 mx-auto"
             >
               Signup
@@ -139,6 +143,7 @@ const Signup = () => {
           </p>
         </div>
       </div>
+      {showMessage && <DisplayMessage message={showMessage} setMessage={setMessage}/>}
     </div>
   );
 };
