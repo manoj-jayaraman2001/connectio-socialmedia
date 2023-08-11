@@ -33,7 +33,6 @@ const Signup = () => {
       }
     );
     const savedUser = await savedUserResponse.json();
-    console.log(savedUser)
     if (!savedUser.error) {
       navigate("/");
     }else{

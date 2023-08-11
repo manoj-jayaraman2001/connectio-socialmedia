@@ -17,31 +17,31 @@ const HelpComponent = () => {
         {/* Add a form or contact information for bug reporting */}
       </div>
 
-      <div class="rounded-lg">
-        <div class="text-2xl font-semibold mb-4 flex items-center">
-          <span class="mr-2">📧</span>
+      <div className="rounded-lg">
+        <div className="text-2xl font-semibold mb-4 flex items-center">
+          <span className="mr-2">📧</span>
           Need Assistance? Reach Out to Us!
         </div>
-        <div class="text-gray-700">
-          <p class="mb-4">
+        <div className="text-gray-700">
+          <p className="mb-4">
             For any questions, concerns, or assistance you require, our
             dedicated support team is here to help. Feel free to get in touch
             with us via email:
           </p>
-          <div class="flex items-center mb-4">
-            <span class="text-xl mr-2">📧</span>
-            <span class="font-semibold">support@connectio.in</span>
+          <div className="flex items-center mb-4">
+            <span className="text-xl mr-2">📧</span>
+            <span className="font-semibold">support@connectio.in</span>
           </div>
-          <p class="mb-4">
+          <p className="mb-4">
             Our team is committed to providing prompt and helpful responses to
             ensure you have the best experience possible. Whether you need help
             with account issues, technical difficulties, or general inquiries,
             don't hesitate to reach out.
           </p>
-          <p class="mb-4">
+          <p className="mb-4">
             Additionally, you can explore our comprehensive FAQ section for
             quick answers to common queries:{" "}
-            <a href="#" class="text-primaryunderline">
+            <a href="#" className="text-primaryunderline">
               FAQs
             </a>
           </p>
@@ -49,14 +49,14 @@ const HelpComponent = () => {
             Thank you for choosing Connectio! We look forward to assisting you.
           </p>
         </div>
-        <div class="mt-4">
-          <span class="bg-primary text-white py-1 px-3 rounded mr-2">
+        <div className="mt-4">
+          <span className="bg-primary text-white py-1 px-3 rounded mr-2">
             #CustomerSupport
           </span>
-          <span class="bg-primary text-white py-1 px-3 rounded mr-2">
+          <span className="bg-primary text-white py-1 px-3 rounded mr-2">
             #EmailSupport
           </span>
-          <span class="bg-primary text-white py-1 px-3 rounded">#WeCare</span>
+          <span className="bg-primary text-white py-1 px-3 rounded">#WeCare</span>
         </div>
       </div>
 

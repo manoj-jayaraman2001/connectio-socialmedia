@@ -17,6 +17,7 @@ const CreatePost = ({ picturePath }) => {
   const [post, setPost] = useState("");
   const userId = useSelector((state) => state.user._id);
   const token = useSelector((state) => state.token);
+  const picPath = image ? image.name: ""
   const dispatch = useDispatch();
 
   const handlePost = async () => {
@@ -24,7 +25,7 @@ const CreatePost = ({ picturePath }) => {
     formData.append("userId", userId);
     formData.append("description", post);
     formData.append("picture", image);
-    formData.append("picturePath", image.name);
+    formData.append("picturePath", picPath);
 
     const postCreated = await fetch("http://localhost:3000/posts/create-post", {
       method: "POST",

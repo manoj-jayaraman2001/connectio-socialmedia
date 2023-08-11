@@ -4,8 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setLogin } from "../../State";
 import { SmallLoader } from "../../components/Loader";
+import DisplayMessage from "../../components/DisplayMessage";
+import { set } from "mongoose";
 const UpdateProfile = () => {
   const [loading, setLoading] = useState(false);
+  const [showMessage, setShowMessage] = useState(null);
   const userData = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const dispatch = useDispatch();
@@ -20,7 +23,7 @@ const UpdateProfile = () => {
     picturePath: userData.picturePath,
     relationshipStatus: userData.relationshipStatus,
   });
-  console.log(userData)
+
   const onDrop = (acceptedFiles) => {
     // Handle the uploaded profile picture here
     const file = acceptedFiles[0];
@@ -46,7 +49,7 @@ const UpdateProfile = () => {
     updateProfile(formData);
   };
   async function updateProfile(formData) {
-    setLoading(false);
+    setLoading(true);
     const updatedProfile = await fetch(
       `http://localhost:3000/users/${id}/update-profile`,
       {
@@ -58,11 +61,18 @@ const UpdateProfile = () => {
         body: JSON.stringify(formData),
       }
     );
+    function handleMessage(){
+        setShowMessage("Profile Updated")
+        setTimeout(()=>{
+            setShowMessage(null)
+        }, 2000)
+    }
+
     const isUpdated = await updatedProfile.json();
     if (isUpdated) {
       dispatch(setLogin({ user: isUpdated, token: token }));
       setLoading(false);
-      navigate("/home/feed");
+      handleMessage()
     }
   }
 
@@ -165,9 +175,12 @@ const UpdateProfile = () => {
           type="submit"
           className="bg-primary text-white px-4 py-2 rounded-md"
         >
-          {loading ? <SmallLoader /> : "Update"}
+          {loading ? <SmallLoader/>: "Update"}
         </button>
       </form>
+      {showMessage && (
+        <DisplayMessage message={showMessage} setMessage={setShowMessage} />
+      )}
     </div>
   );
 };

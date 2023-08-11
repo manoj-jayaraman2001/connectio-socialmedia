@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
+import { setLogout } from "../../State";
 import {
   Bars3Icon,
   XMarkIcon,
@@ -8,23 +9,15 @@ import {
   BellAlertIcon,
   QuestionMarkCircleIcon,
   UserCircleIcon,
-  UserGroupIcon,
+  ArrowPathIcon,
   HomeModernIcon,
 } from "@heroicons/react/24/solid";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ProfilePic from "../../components/ProfilePic";
-const products = [
-  { name: "Update Profile", href: "#", icon: UserCircleIcon },
-  { name: "Friend Requests", href: "#", icon: UserGroupIcon },
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -32,6 +25,16 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const fullName = `${user.firstName} ${user.lastName}`;
   const profileImg = user.picturePath;
+
+  const products = [
+    { name: "My Profile", href: `/profile/${user._id}`, icon: UserCircleIcon },
+    { name: "Update Profile", href: "#", icon: ArrowPathIcon },
+  ];
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
+
   return (
     <header className="bg-white">
       <nav
@@ -39,10 +42,10 @@ export default function Navbar() {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <Link href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Connectio</span>
             <img className="h-8 w-auto" src={logo} alt="Connectio" />
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -55,7 +58,7 @@ export default function Navbar() {
           </button>
         </div>
         <Popover.Group className="hidden lg:flex items-end lg:gap-x-12 ml-36">
-          <NavLink  to="/home/feed" title="Home">
+          <NavLink to="/home/feed" title="Home">
             {({ isActive, isPending }) => {
               return (
                 <HomeModernIcon
@@ -136,13 +139,13 @@ export default function Navbar() {
                         />
                       </div>
                       <div className="flex-auto">
-                        <a
-                          href={item.href}
+                        <Link
+                          to={item.href}
                           className="block font-semibold text-gray-900"
                         >
                           {item.name}
                           <span className="absolute inset-0" />
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   ))}
@@ -156,7 +159,10 @@ export default function Navbar() {
             <MoonIcon className="h-5 w-5 text-black mr-16 mt-1 cursor-pointer" />
           </div>
           <Link
-            onClick={()=>{dispatch(setLogout())}}
+            to="/"
+            onClick={() => {
+              dispatch(setLogout());
+            }}
             className="text-sm font-semibold leading-6 text-primary"
           >
             Log out <span aria-hidden="true">&rarr;</span>
@@ -205,8 +211,8 @@ export default function Navbar() {
                         {[...products].map((item) => (
                           <Disclosure.Button
                             key={item.name}
-                            as="a"
-                            href={item.href}
+                            as="Link"
+                            to={item.href}
                             className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                           >
                             {item.name}
@@ -216,27 +222,70 @@ export default function Navbar() {
                     </>
                   )}
                 </Disclosure>
-                <NavLink className="flex gap-2 items-center">
-                  <HomeModernIcon className="h-6 w-6 text-gray-400 hover:text-primary" />
-                  <span>Home</span>
+                <NavLink to="/home/feed" title="Home">
+                  {({ isActive, isPending }) => {
+                    return (
+                      <>
+                        <HomeModernIcon
+                          className={`h-6 w-6 ${
+                            isActive ? "text-primary" : "text-gray-400"
+                          }`}
+                        />
+                        <span>Home</span>
+                      </>
+                    );
+                  }}
                 </NavLink>
 
-                <NavLink className="flex gap-2 items-center">
-                  <ChatBubbleLeftEllipsisIcon className="h-6 w-6 text-gray-400 hover:text-primary" />
-                  <span>Messages</span>
+                <NavLink to="/home/messages" title="Messages">
+                  {({ isActive, isPending }) => {
+                    return (
+                      <>
+                        <ChatBubbleLeftEllipsisIcon
+                          className={`h-6 w-6 ${
+                            isActive ? "text-primary" : "text-gray-400"
+                          }`}
+                        />
+                        <span>Messages</span>
+                      </>
+                    );
+                  }}
                 </NavLink>
-                <NavLink className="flex gap-2 items-center">
-                  <BellAlertIcon className="h-6 w-6 text-gray-400 hover:text-primary" />
-                  <span>Notifications</span>
+                <NavLink to="/home/notifications" title="Notifications">
+                  {({ isActive, isPending }) => {
+                    return (
+                      <>
+                        <BellAlertIcon
+                          className={`h-6 w-6 ${
+                            isActive ? "text-primary" : "text-gray-400"
+                          }`}
+                        />
+                        <span>Notifications</span>
+                      </>
+                    );
+                  }}
                 </NavLink>
-                <NavLink className="flex gap-2 items-center">
-                  <QuestionMarkCircleIcon className="h-6 w-6 text-gray-400 hover:text-primary" />
-                  <span>Help</span>
+                <NavLink to="/home/help" title="Help">
+                  {({ isActive, isPending }) => {
+                    return (
+                      <>
+                        <QuestionMarkCircleIcon
+                          className={`h-6 w-6 ${
+                            isActive ? "text-primary" : "text-gray-400"
+                          }`}
+                        />
+                        <span>Help</span>
+                      </>
+                    );
+                  }}
                 </NavLink>
               </div>
               <div className="py-6">
                 <Link
-                  onClick={()=>{dispatch(setLogout())}}
+                  to="/"
+                  onClick={() => {
+                    dispatch(setLogout());
+                  }}
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Log out

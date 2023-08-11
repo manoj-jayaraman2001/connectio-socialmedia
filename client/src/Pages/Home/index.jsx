@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
 import UserWidget from "../../components/UserWidget";
 import Navbar from "../Navbar";
-import CreatePost from "../../components/CreatePostWidget";
-import Posts from "../Posts";
 import AdvertComponent from "../../components/AdvertComponent";
-import "./index.css";
 import FriendListComponent from "../../components/FriendList";
-import { Routes, Route, Outlet } from "react-router-dom";
+import {  Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Messages from "../Messages";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+    const userInfo = useSelector(state => state.user)
+    const userId = userInfo._id
+    
   const navigate = useNavigate();
   useEffect(() => {
     navigate("/home/feed");
@@ -20,8 +20,8 @@ const Home = () => {
       <Navbar />
       <div className="flex flex-col md:flex-row md:justify-center md:items-start mt-1 md:gap-5 p-2">
         <div className="hidden md:block max-w-sm">
-          <UserWidget />
-          <FriendListComponent />
+          <UserWidget userInfo={userInfo} isProfile={false}/>
+          <FriendListComponent userId = {userId} />
         </div>
 
         <Outlet />

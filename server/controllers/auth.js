@@ -7,7 +7,6 @@ const User = require("../models/User");
 const register = async (req, res) => {
   try {
     const { password } = req.body;
-    console.log(req.body);
     if (!password) {
       return res.status(400).json({ error: "Password is required" });
     }

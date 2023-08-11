@@ -1,13 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../../State";
 import PostComponent from "../../components/PostComponent";
-
-const Posts = ({ userId, isProfile = false }) => {
+import { SpinLoader } from "../../components/Loader";
+const Posts = ({ userId, isProfile}) => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
+  const [Loading, setLoading] = useState(false)
   const getPosts = async () => {
+    setLoading(true)
     const response = await fetch("http://localhost:3000/posts", {
       method: "GET",
       headers: {
@@ -17,9 +19,11 @@ const Posts = ({ userId, isProfile = false }) => {
     });
     const data = await response.json();
     dispatch(setPosts({ posts: data }));
+    setLoading(false)
   };
 
   const getUserPosts = async () => {
+    setLoading(true)
     const response = await fetch(
       `http://localhost:3000/posts/${userId}/posts`,
       {
@@ -32,6 +36,7 @@ const Posts = ({ userId, isProfile = false }) => {
     );
     const data = await response.json();
     dispatch(setPosts({ posts: data }));
+    setLoading(false)
   };
   useEffect(() => {
     if (isProfile) {
@@ -40,6 +45,20 @@ const Posts = ({ userId, isProfile = false }) => {
       getPosts();
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if(Loading) return(
+    <div className="h-screen my-auto">
+      <SpinLoader />
+    </div>
+  )
+
+  if(posts.length === 0){
+    return(
+      <div className="p-6 bg-white rounded text-center h-screen">
+        <p className="font-LatoFont text-gray-400">No Posts to show</p>
+      </div>
+    )
+  }
 
   return (
     <div>

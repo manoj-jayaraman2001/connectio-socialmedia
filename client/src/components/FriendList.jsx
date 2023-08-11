@@ -3,8 +3,7 @@ import { useSelector } from "react-redux";
 import Friend from "../components/Friend";
 import { SpinLoader } from "./Loader";
 
-const FriendListComponent = () => {
-  const userId = useSelector((state) => state.user._id);
+const FriendListComponent = ({userId}) => {
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
   const [friendsData, setFriendsData] = useState(null);
