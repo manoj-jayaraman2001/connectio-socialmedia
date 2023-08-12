@@ -9,6 +9,8 @@ import { set } from "mongoose";
 const UpdateProfile = () => {
   const [loading, setLoading] = useState(false);
   const [showMessage, setShowMessage] = useState(null);
+  const [formChanged, setFormChanged] = useState(false);
+  const isDisabled = !formChanged || loading;
   const userData = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const dispatch = useDispatch();
@@ -39,6 +41,7 @@ const UpdateProfile = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setFormChanged(true);
     setFormData({ ...formData, [name]: value });
   };
 
@@ -48,6 +51,12 @@ const UpdateProfile = () => {
 
     updateProfile(formData);
   };
+  function handleMessage() {
+    setShowMessage("Profile Updated");
+    setTimeout(() => {
+      setShowMessage(null);
+    }, 2000);
+  }
   async function updateProfile(formData) {
     setLoading(true);
     const updatedProfile = await fetch(
@@ -61,18 +70,13 @@ const UpdateProfile = () => {
         body: JSON.stringify(formData),
       }
     );
-    function handleMessage(){
-        setShowMessage("Profile Updated")
-        setTimeout(()=>{
-            setShowMessage(null)
-        }, 2000)
-    }
 
     const isUpdated = await updatedProfile.json();
     if (isUpdated) {
       dispatch(setLogin({ user: isUpdated, token: token }));
       setLoading(false);
-      handleMessage()
+      handleMessage();
+      setFormChanged(false)
     }
   }
 
@@ -173,9 +177,14 @@ const UpdateProfile = () => {
         </div>
         <button
           type="submit"
-          className="bg-primary text-white px-4 py-2 rounded-md"
+          className={`${
+            isDisabled ? "bg-gray-300" : "bg-primary"
+          } text-white px-4 py-2 rounded-md ${
+            isDisabled ? "cursor-not-allowed" : "cursor-pointer"
+          }`}
+          disabled={isDisabled}
         >
-          {loading ? <SmallLoader/>: "Update"}
+          {loading ? <SmallLoader /> : "Update"}
         </button>
       </form>
       {showMessage && (

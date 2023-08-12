@@ -28,7 +28,7 @@ export default function Navbar() {
 
   const products = [
     { name: "My Profile", href: `/profile/${user._id}`, icon: UserCircleIcon },
-    { name: "Update Profile", href: "#", icon: ArrowPathIcon },
+    { name: "Update Profile", href: "/home/update-profile", icon: ArrowPathIcon },
   ];
 
   function classNames(...classes) {
