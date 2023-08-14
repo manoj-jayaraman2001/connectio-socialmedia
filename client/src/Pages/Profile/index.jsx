@@ -41,7 +41,7 @@ const ProfilePage = () => {
           <UserWidget userInfo={user} isProfile />
           <FriendListComponent userId={userId} />
         </div>
-        <div className="sm:w-full md:w-1/3">
+        <div className="sm:w-full md:w-1/2 xl:w-1/3">
           <Posts userId={userId} isProfile={true} />
         </div>
         <div className="hidden xl:block max-w-sm">

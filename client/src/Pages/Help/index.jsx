@@ -49,14 +49,14 @@ const HelpComponent = () => {
             Thank you for choosing Connectio! We look forward to assisting you.
           </p>
         </div>
-        <div className="mt-4">
-          <span className="bg-primary text-white py-1 px-3 rounded mr-2">
+        <div className="mt-4 flex flex-wrap">
+          <span className="bg-primary text-white py-1 px-3 rounded m-2">
             #CustomerSupport
           </span>
-          <span className="bg-primary text-white py-1 px-3 rounded mr-2">
+          <span className="bg-primary text-white py-1 px-3 rounded m-2">
             #EmailSupport
           </span>
-          <span className="bg-primary text-white py-1 px-3 rounded">#WeCare</span>
+          <span className="bg-primary text-white py-1 px-3 rounded m-2">#WeCare</span>
         </div>
       </div>
 

@@ -47,7 +47,7 @@ const Posts = ({ userId, isProfile}) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if(Loading) return(
-    <div className="h-screen my-auto">
+    <div className="mt-20">
       <SpinLoader />
     </div>
   )
@@ -74,6 +74,7 @@ const Posts = ({ userId, isProfile}) => {
           userPicturePath,
           likes,
           comments,
+          createdAt
         }) => (
           <PostComponent
             key={_id}
@@ -86,10 +87,12 @@ const Posts = ({ userId, isProfile}) => {
             userPicturePath={userPicturePath}
             likes={likes}
             comments={comments}
+            createdAt = {createdAt}
           />
         )
       )}
     </div>
+
   );
 };
 

@@ -2,8 +2,13 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../State";
 import Friend from "../components/Friend";
-import { HeartIcon, ChatBubbleOvalLeftIcon, ShareIcon} from "@heroicons/react/24/solid";
-const PostWidget = ({
+import moment from 'moment';
+import {
+  HeartIcon,
+  ChatBubbleOvalLeftIcon,
+  ShareIcon,
+} from "@heroicons/react/24/solid";
+const PostComponent = ({
   postId,
   postUserId,
   name,
@@ -13,6 +18,7 @@ const PostWidget = ({
   userPicturePath,
   likes,
   comments,
+  createdAt,
 }) => {
   const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
@@ -20,6 +26,20 @@ const PostWidget = ({
   const loggedInUserId = useSelector((state) => state.user._id);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
+  // ---------------format Time-------------------- //
+  function formatDate(date) {
+    const momentDate = moment(date);
+  
+    if (momentDate.isSame(moment(), 'day')) {
+      return 'today';
+    } else if (momentDate.isSame(moment().subtract(1, 'days'), 'day')) {
+      return 'yesterday';
+    } else {
+      const distance = momentDate.fromNow();
+      return distance;
+    }
+  }
+  
 
   const patchLike = async () => {
     const response = await fetch(`http://localhost:3000/posts/${postId}/like`, {
@@ -42,7 +62,7 @@ const PostWidget = ({
         subtitle={location}
         userPicturePath={userPicturePath}
       />
-      <p className="text-gray-700">{description}</p>
+
       {picturePath && (
         <img
           className="w-full h-auto rounded-md mt-3"
@@ -50,6 +70,8 @@ const PostWidget = ({
           src={`http://localhost:3000/assets/${picturePath}`}
         />
       )}
+      <p className="text-gray-700">{description}</p>
+      <p className="text-gray-500 text-xs font-nunito">{formatDate(createdAt)}</p>
       <div className="flex place-content-between mt-1">
         <div className="flex gap-4">
           <div className="flex gap-1">
@@ -73,13 +95,15 @@ const PostWidget = ({
               className="text-gray-500 hover:text-primary"
               onClick={() => setIsComments(!isComments)}
             >
-              <ChatBubbleOvalLeftIcon className="h-5 w-5"/>
+              <ChatBubbleOvalLeftIcon className="h-5 w-5" />
             </button>
             <span>{comments.length}</span>
           </div>
         </div>
 
-        <button className="text-primary"><ShareIcon className="h-5 w-5"/></button>
+        <button className="text-primary">
+          <ShareIcon className="h-5 w-5" />
+        </button>
       </div>
       {isComments && (
         <div className="mt-2">
@@ -96,4 +120,4 @@ const PostWidget = ({
   );
 };
 
-export default PostWidget;
+export default PostComponent;

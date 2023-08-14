@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import { setLogout } from "../../State";
+import { setMode } from "../../State";
 import {
   Bars3Icon,
   XMarkIcon,
@@ -9,7 +10,6 @@ import {
   BellAlertIcon,
   QuestionMarkCircleIcon,
   UserCircleIcon,
-  ArrowPathIcon,
   HomeModernIcon,
 } from "@heroicons/react/24/solid";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -28,7 +28,6 @@ export default function Navbar() {
 
   const products = [
     { name: "My Profile", href: `/profile/${user._id}`, icon: UserCircleIcon },
-    { name: "Update Profile", href: "/home/update-profile", icon: ArrowPathIcon },
   ];
 
   function classNames(...classes) {
@@ -155,7 +154,12 @@ export default function Navbar() {
           </Popover>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <div title="Change Theme">
+          <div
+            title="Change Theme"
+            onClick={() => {
+              setMode((mode) => (mode === "light" ? "dark" : "light"));
+            }}
+          >
             <MoonIcon className="h-5 w-5 text-black mr-16 mt-1 cursor-pointer" />
           </div>
           <Link
