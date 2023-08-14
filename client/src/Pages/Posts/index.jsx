@@ -11,7 +11,7 @@ const Posts = ({ userId, isProfile}) => {
   const isDark = useSelector(state => state.mode === 'dark')
   const getPosts = async () => {
     setLoading(true)
-    const response = await fetch("http://localhost:3000/posts", {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/posts`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
