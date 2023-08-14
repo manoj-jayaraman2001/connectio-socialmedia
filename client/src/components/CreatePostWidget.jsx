@@ -28,8 +28,8 @@ const CreatePost = ({ picturePath }) => {
     formData.append("description", post);
     formData.append("picture", image);
     formData.append("picturePath", picPath);
-
-    const postCreated = await fetch("http://localhost:3000/posts/create-post", {
+    
+    const postCreated = await fetch(`${import.meta.env.VITE_BASE_URL}/posts/create-post`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

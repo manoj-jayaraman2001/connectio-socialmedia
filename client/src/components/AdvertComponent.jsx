@@ -15,7 +15,7 @@ const AdvertComponent = () => {
       <img
         className="w-full h-auto rounded-md my-3"
         alt="advert"
-        src="http://localhost:3000/assets/info4.jpeg"
+        src={`${import.meta.env.VITE_BASE_URL}/assets/info4.jpeg`}
       />
       <div className={`${textColor} flex items-center justify-between mb-2`}>
         <p className="text-neutral-main">MikaCosmetics</p>

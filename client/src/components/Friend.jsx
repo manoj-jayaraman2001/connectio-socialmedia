@@ -30,7 +30,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const patchFriend = async () => {
     setLoading(true)
     const response = await fetch(
-      `http://localhost:3000/friends/${id}/${friendId}`,
+      `${import.meta.env.VITE_BASE_URL}/friends/${id}/${friendId}`,
       {
         method: "PATCH",
         headers: {

@@ -13,7 +13,7 @@ const ProfilePage = () => {
   const token = useSelector((state) => state.token);
   const isDark = useSelector(state => state.mode === 'dark')
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3000/users/${userId}`, {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/users/${userId}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

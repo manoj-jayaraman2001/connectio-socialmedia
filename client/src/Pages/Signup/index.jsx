@@ -26,7 +26,7 @@ const Signup = () => {
   }
   async function createUser(data) {
     const savedUserResponse = await fetch(
-      "http://localhost:3000/auth/register",
+      `${import.meta.env.VITE_BASE_URL}/auth/register`,
       {
         method: "POST",
         headers: {

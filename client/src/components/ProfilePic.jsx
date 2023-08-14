@@ -6,7 +6,7 @@ const ProfilePic = ({dimension, picturePath}) => {
     <div>
       {picturePath ? (
         <img
-          src={`http://localhost:3000/assets/${picturePath}`}
+          src={`${import.meta.env.VITE_BASE_URL}/assets/${picturePath}`}
           alt="img"
           className={`rounded-full ${dimension}`}
         />

@@ -60,7 +60,7 @@ const UpdateProfile = () => {
   async function updateProfile(formData) {
     setLoading(true);
     const updatedProfile = await fetch(
-      `http://localhost:3000/users/${id}/update-profile`,
+      `${import.meta.env.VITE_BASE_URL}/users/${id}/update-profile`,
       {
         method: "PATCH",
         headers: {

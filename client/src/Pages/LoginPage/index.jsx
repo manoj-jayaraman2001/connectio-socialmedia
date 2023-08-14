@@ -19,7 +19,7 @@ const Login = () => {
   const navigate = useNavigate();
   async function login(email, password) {
     setloading(true);
-    const savedUserResponse = await fetch("http://localhost:3000/auth/login", {
+    const savedUserResponse = await fetch(`${import.meta.env.VITE_BASE_URL}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

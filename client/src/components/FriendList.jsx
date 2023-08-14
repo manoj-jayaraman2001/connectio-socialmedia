@@ -11,7 +11,7 @@ const FriendListComponent = ({ userId }) => {
   const textColor = isDark ? "text-gray-200" : "text-gray-900";
   const getFriends = async () => {
     const response = await fetch(
-      `http://localhost:3000/users/${userId}/friends`,
+      `${import.meta.env.VITE_BASE_URL}/users/${userId}/friends`,
       {
         method: "GET",
         headers: {

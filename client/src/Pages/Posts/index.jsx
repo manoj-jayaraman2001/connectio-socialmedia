@@ -26,7 +26,7 @@ const Posts = ({ userId, isProfile}) => {
   const getUserPosts = async () => {
     setLoading(true)
     const response = await fetch(
-      `http://localhost:3000/posts/${userId}/posts`,
+      `${import.meta.env.VITE_BASE_URL}/posts/${userId}/posts`,
       {
         method: "GET",
         headers: {

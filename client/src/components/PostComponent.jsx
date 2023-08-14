@@ -44,7 +44,7 @@ const PostComponent = ({
   }
 
   const patchLike = async () => {
-    const response = await fetch(`http://localhost:3000/posts/${postId}/like`, {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/posts/${postId}/like`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ const PostComponent = ({
         <img
           className={`w-full h-auto rounded-md mt-3`}
           alt="post"
-          src={`http://localhost:3000/assets/${picturePath}`}
+          src={`${import.meta.env.VITE_BASE_URL}/assets/${picturePath}`}
         />
       )}
       <p className={textColor}>{description}</p>
