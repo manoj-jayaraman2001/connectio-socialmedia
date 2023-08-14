@@ -19,7 +19,9 @@ const CreatePost = ({ picturePath }) => {
   const token = useSelector((state) => state.token);
   const picPath = image ? image.name: ""
   const dispatch = useDispatch();
-
+  const isDark = useSelector((state) => state.mode === "dark");
+  const textColor = isDark ? 'text-gray-200' : 'text-gray-900'
+  const profileImg = useSelector(state => state.user.picturePath)
   const handlePost = async () => {
     const formData = new FormData();
     formData.append("userId", userId);
@@ -52,22 +54,22 @@ const CreatePost = ({ picturePath }) => {
 
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
-    "image/png": [".png", ".jpg"],
+    accept: "image/*",
     onDrop,
   });
 
   return (
-    <div className="p-4 border rounded bg-white">
+    <div className={`p-4  rounded ${isDark ? 'bg-bgDarkWidget' : 'bg-white'}`}>
       <div className="flex items-center space-x-4">
         {/* UserImage component */}
-        <ProfilePic dimension={"h-10 w-10"} />
+        <ProfilePic dimension={"h-10 w-10"} picturePath={profileImg} />
 
         <input
           type="text"
           placeholder="What's on your mind..."
           onChange={(e) => setPost(e.target.value)}
           value={post}
-          className="w-full bg-gray-100 rounded-full py-2 px-4 outline-primary"
+          className={`w-full ${isDark ? 'bg-gray-700' : 'bg-gray-100'} ${textColor} rounded-full py-2 px-4 outline-primary`}
         />
       </div>
 
@@ -126,7 +128,7 @@ const CreatePost = ({ picturePath }) => {
         <button
           disabled={!post}
           onClick={handlePost}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-300 ml-auto"
+          className="px-4 py-2 bg-primary text-white rounded-full disabled:bg-gray-300 ml-auto"
         >
           POST
         </button>

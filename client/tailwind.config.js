@@ -5,7 +5,10 @@ export default {
     extend: {
       colors: {
         primary: '#8046FD',
-        bgcolor: '#F6F6F6' 
+        bgcolor: '#F6F6F6',
+        bgDarkWidget: '#333333',
+        bgNavDark: '#2E2E2E',
+        bgDark: '#1E1E1E' 
       },
       fontFamily: {
         jsans: ['Josefin Sans', 'sans-serif'],

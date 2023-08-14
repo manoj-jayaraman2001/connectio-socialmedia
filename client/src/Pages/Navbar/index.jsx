@@ -25,7 +25,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const fullName = `${user.firstName} ${user.lastName}`;
   const profileImg = user.picturePath;
-
+  const isDark = Boolean(useSelector((state) => state.mode === "dark"));
   const products = [
     { name: "My Profile", href: `/profile/${user._id}`, icon: UserCircleIcon },
   ];
@@ -35,7 +35,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="bg-white">
+    <header className={isDark ? "bg-bgNavDark" : "bg-white"}>
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -106,7 +106,11 @@ export default function Navbar() {
           <Popover className="relative">
             <Popover.Button className="flex items-center gap-x-1  leading-6 ml-12 outline-none">
               <ProfilePic dimension={"h-6 w-6"} picturePath={profileImg} />
-              <span className="text-base text-gray-900 font-LatoFont">
+              <span
+                className={`text-base ${
+                  isDark ? "text-gray-300" : "text-gray-900"
+                } font-LatoFont`}
+              >
                 {fullName}
               </span>
               <ChevronDownIcon
@@ -124,23 +128,25 @@ export default function Navbar() {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="absolute -left-8 top-full z-10 mt-3  w-max overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+              <Popover.Panel
+                className={`absolute -left-8 top-full z-10 mt-3  w-max overflow-hidden rounded-3xl ${isDark ? 'bg-bgDarkWidget' : 'bg-white'} shadow-lg ring-1 ring-gray-900/5`}
+              >
                 <div className="p-2">
                   {products.map((item) => (
                     <div
                       key={item.name}
-                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
+                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6"
                     >
-                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg">
                         <item.icon
-                          className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
+                          className="h-6 w-6 text-gray-300 group-hover:text-indigo-600"
                           aria-hidden="true"
                         />
                       </div>
                       <div className="flex-auto">
                         <Link
                           to={item.href}
-                          className="block font-semibold text-gray-900"
+                          className={`block font-semibold ${isDark ?'text-gray-200':  'text-gray-900'}`}
                         >
                           {item.name}
                           <span className="absolute inset-0" />
@@ -157,10 +163,16 @@ export default function Navbar() {
           <div
             title="Change Theme"
             onClick={() => {
-              setMode((mode) => (mode === "light" ? "dark" : "light"));
+              dispatch(
+                setMode((mode) => (mode === "light" ? "dark" : "light"))
+              );
             }}
           >
-            <MoonIcon className="h-5 w-5 text-black mr-16 mt-1 cursor-pointer" />
+            <MoonIcon
+              className={`h-5 w-5 ${
+                isDark ? "text-white" : "text-black"
+              } text-black mr-16 mt-1 cursor-pointer`}
+            />
           </div>
           <Link
             to="/"

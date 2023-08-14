@@ -7,6 +7,8 @@ const FriendListComponent = ({ userId }) => {
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
   const [friendsData, setFriendsData] = useState(null);
+  const isDark = Boolean(useSelector((state) => state.mode === "dark"));
+  const textColor = isDark ? "text-gray-200" : "text-gray-900";
   const getFriends = async () => {
     const response = await fetch(
       `http://localhost:3000/users/${userId}/friends`,
@@ -29,8 +31,14 @@ const FriendListComponent = ({ userId }) => {
 
   if (!friendsData) {
     return (
-      <div className="p-4 h-max bg-white shadow-md rounded-lg mt-2">
-        <h2 className="text-xl font-semibold mb-6 font-LatoFont">Friends</h2>
+      <div
+        className={`p-4 h-max ${
+          isDark ? "bg-bgDarkWidget" : "bg-white"
+        } shadow-md rounded-lg mt-2`}
+      >
+        <h2 className={`text-xl font-semibold mb-6 font-LatoFont ${textColor}`}>
+          Friends
+        </h2>
         <div className="space-y-6">
           <SpinLoader />
         </div>
@@ -39,9 +47,15 @@ const FriendListComponent = ({ userId }) => {
   }
   if (friendsData.message || friendsData.length === 0) {
     return (
-      <div className="p-4 h-max bg-white shadow-md rounded-lg mt-2">
-        <h2 className="text-xl font-semibold mb-6 font-LatoFont">Friends</h2>
-        <div className="space-y-6">
+      <div
+        className={`p-4 h-max ${
+          isDark ? "bg-bgDarkWidget" : "bg-white"
+        } shadow-md rounded-lg mt-2`}
+      >
+        <h2 className={`text-xl font-semibold mb-6 font-LatoFont ${textColor}`}>
+          Friends
+        </h2>
+        <div className={`${textColor} space-y-6`}>
           <p>No friends to show</p>
         </div>
       </div>
@@ -49,8 +63,14 @@ const FriendListComponent = ({ userId }) => {
   }
 
   return (
-    <div className="p-4 h-max bg-white shadow-md rounded-lg mt-2">
-      <h2 className="text-xl font-semibold mb-6 font-LatoFont">Friends</h2>
+    <div
+      className={`p-4 h-max ${
+        isDark ? "bg-bgDarkWidget" : "bg-white"
+      } shadow-md rounded-lg mt-2`}
+    >
+      <h2 className={`text-xl font-semibold mb-6 font-LatoFont ${textColor}`}>
+        Friends
+      </h2>
       <div className="space-y-6">
         {friendsData.map((friend) => {
           return (

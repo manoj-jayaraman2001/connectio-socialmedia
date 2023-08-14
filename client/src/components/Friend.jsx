@@ -13,6 +13,8 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const friends = useSelector((state) => state.user.friends);
   const isFriend = friends.includes(friendId)
   const [isLoading, setLoading] = useState(false)
+  const isDark = useSelector(state => state.mode === 'dark')
+  const textColor = isDark ? 'text-gray-200' : 'text-gray-900'
   const FriendIconComponent = () => {
     if(id === friendId) return <></>
     if (isLoading) return <DotLoader/>
@@ -52,10 +54,10 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
           }}
           className="cursor-pointer"
         >
-          <h5 className="text-neutral-main font-semibold hover:text-primary-light transition-colors">
+          <h5 className={`text-neutral-main font-semibold hover:text-primary-light transition-colors ${textColor}`}>
             {name}
           </h5>
-          <p className="text-neutral-medium text-sm">{subtitle}</p>
+          <p className={`text-neutral-medium text-sm ${textColor}`}>{subtitle}</p>
         </div>
       </div>
       <button onClick={patchFriend}>

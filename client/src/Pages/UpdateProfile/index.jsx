@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { setLogin } from "../../State";
 import { SmallLoader } from "../../components/Loader";
 import DisplayMessage from "../../components/DisplayMessage";
-import { set } from "mongoose";
+
 const UpdateProfile = () => {
   const [loading, setLoading] = useState(false);
   const [showMessage, setShowMessage] = useState(null);
@@ -14,7 +13,8 @@ const UpdateProfile = () => {
   const userData = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const isDark = useSelector((state) => state.mode === "dark");
+  const textColor = isDark ? "text-gray-200" : "text-gray-800";
   const id = userData._id;
   const [formData, setFormData] = useState({
     firstName: userData.firstName,
@@ -76,42 +76,46 @@ const UpdateProfile = () => {
       dispatch(setLogin({ user: isUpdated, token: token }));
       setLoading(false);
       handleMessage();
-      setFormChanged(false)
+      setFormChanged(false);
     }
   }
 
   return (
-    <div className="bg-white rounded-md sm:w-full  p-6 lg:w-1/3">
-      <h2 className="text-2xl font-semibold mb-4">Update Profile</h2>
+    <div
+      className={`${
+        isDark ? "bg-bgDarkWidget" : "bg-white"
+      } rounded-md sm:w-full p-6 lg:w-1/3`}
+    >
+      <h2 className={`${textColor} text-2xl font-semibold mb-4`}>Update Profile</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="firstName" className="block font-medium mb-1">
+          <label htmlFor="firstName" className={`block font-medium mb-1 ${textColor}`}>
             First Name
           </label>
           <input
             type="text"
             id="firstName"
             name="firstName"
-            className="w-full border border-gray-300 rounded px-3 py-2 outline-primary"
+            className={`${isDark ? 'bg-gray-700' : ''} ${textColor} w-full border border-gray-300 rounded px-3 py-2 outline-primary`}
             value={formData.firstName}
             onChange={handleChange}
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="lastName" className="block font-medium mb-1">
+          <label htmlFor="lastName" className={`block font-medium mb-1 ${textColor}`}>
             Last Name
           </label>
           <input
             type="text"
             id="lastName"
             name="lastName"
-            className="w-full border border-gray-300 rounded px-3 py-2 outline-primary"
+            className={`${isDark ? 'bg-gray-700' : ''} ${textColor} w-full border border-gray-300 rounded px-3 py-2 outline-primary`}
             value={formData.lastName}
             onChange={handleChange}
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="profilePic" className="block font-medium mb-1">
+          <label htmlFor="profilePic" className={`block font-medium mb-1 ${textColor}`}>
             Profile Picture
           </label>
           <div
@@ -131,27 +135,27 @@ const UpdateProfile = () => {
           </div>
         </div>
         <div className="mb-4">
-          <label htmlFor="location" className="block font-medium mb-1">
+          <label htmlFor="location" className={`block font-medium mb-1 ${textColor}`}>
             Location
           </label>
           <input
             type="text"
             id="location"
             name="location"
-            className="w-full border border-gray-300 rounded px-3 py-2 outline-primary"
+            className={`${isDark ? 'bg-gray-700' : ''} ${textColor} w-full border border-gray-300 rounded px-3 py-2 outline-primary`}
             value={formData.location}
             onChange={handleChange}
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="occupation" className="block font-medium mb-1">
+          <label htmlFor="occupation" className={`block font-medium mb-1 ${textColor}`}>
             Occupation
           </label>
           <input
             type="text"
             id="occupation"
             name="occupation"
-            className="w-full border border-gray-300 rounded px-3 py-2 outline-primary"
+            className={`${isDark ? 'bg-gray-700' : ''} ${textColor} w-full border border-gray-300 rounded px-3 py-2 outline-primary`}
             value={formData.occupation}
             onChange={handleChange}
           />
@@ -159,14 +163,14 @@ const UpdateProfile = () => {
         <div className="mb-4">
           <label
             htmlFor="relationshipStatus"
-            className="block font-medium mb-1"
+            className={`block font-medium mb-1 ${textColor}`}
           >
             Relationship Status
           </label>
           <select
             id="relationshipStatus"
             name="relationshipStatus"
-            className="w-full border border-gray-300 rounded px-3 py-2 outline-primary"
+            className={`${isDark ? 'bg-gray-700' : ''} ${textColor} w-full border border-gray-300 rounded px-3 py-2 outline-primary`}
             value={formData.relationshipStatus}
             onChange={handleChange}
           >
@@ -178,7 +182,7 @@ const UpdateProfile = () => {
         <button
           type="submit"
           className={`${
-            isDisabled ? "bg-gray-300" : "bg-primary"
+            isDisabled ? "bg-gray-400" : "bg-primary"
           } text-white px-4 py-2 rounded-md ${
             isDisabled ? "cursor-not-allowed" : "cursor-pointer"
           }`}

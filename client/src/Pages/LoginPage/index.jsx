@@ -4,26 +4,28 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { setLogin } from "../../State/index";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DisplayMessage from "../../components/DisplayMessage";
+import { SpinLoader } from "../../components/Loader";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showMessage, setMessage] = useState(null)
+  const [showMessage, setMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const [loading, setloading] = useState(false);
+  const isDark = useSelector((state) => state.mode === "dark");
+  const textColor = isDark ? "text-gray-300" : "text-gray-800";
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   async function login(email, password) {
-    const savedUserResponse = await fetch(
-      "http://localhost:3000/auth/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: email, password: password}), // Make sure to stringify the JSON data
-      }
-    );
+    setloading(true);
+    const savedUserResponse = await fetch("http://localhost:3000/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email, password: password }), // Make sure to stringify the JSON data
+    });
     const verifyUser = await savedUserResponse.json();
     if (!verifyUser.message) {
       dispatch(
@@ -33,32 +35,40 @@ const Login = () => {
         })
       );
       navigate("/home");
-    }else{
-      setMessage(verifyUser.message)
+    } else {
+      setMessage(verifyUser.message);
+      setloading(false);
     }
-      
-    
   }
   function handleLogin(event) {
     event.preventDefault();
-    login(email, password)
+    login(email, password);
   }
 
   return (
-    <div className="flex h-screen items-center justify-center bg-bgcolor">
+    <div
+      className={`flex h-screen items-center justify-center ${
+        isDark ? "bg-bgDark" : "bg-bgcolor"
+      }`}
+    >
       <div className="flex flex-col items-center gap-6 p-4 rounded-lg">
         <div className="flex flex-col items-center gap-2">
           <img src={logo} alt="Social-Pulse" className="w-36 h-36" />
           <p className="font-jsans text-xl font-semibold text-primary mb-2">
             Connectio
           </p>
-          <p className="mb-6">Login to your Account</p>
-          <form className="flex flex-col font-nunito gap-2" onSubmit={handleLogin}>
-            <label className="text-sm" htmlFor="email">
+          <p className={`${textColor} mb-6`}>Login to your Account</p>
+          <form
+            className="flex flex-col font-nunito gap-2"
+            onSubmit={handleLogin}
+          >
+            <label className={`${textColor} text-sm`} htmlFor="email">
               Email
             </label>
             <input
-              className="p-2 border border-gray-300 rounded outline-primary"
+              className={`${
+                isDark ? "bg-gray-700" : ""
+              } ${textColor} p-2 border border-gray-300 rounded outline-primary`}
               type="email"
               id="email"
               placeholder="Enter Your Email"
@@ -68,12 +78,14 @@ const Login = () => {
               }}
               required
             />
-            <label className="text-sm" htmlFor="password">
+            <label className={`${textColor} text-sm`} htmlFor="password">
               Password
             </label>
             <div className="relative flex items-center">
               <input
-                className="p-2 border border-gray-300 outline-primary w-60 pr-10"
+                className={`${
+                  isDark ? "bg-gray-700" : ""
+                } ${textColor} p-2 border border-gray-300 outline-primary w-60 pr-10`}
                 type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder="Password"
@@ -109,9 +121,9 @@ const Login = () => {
               Login
             </button>
           </form>
-
-          <p className="text-sm">
-            New user?
+          {loading ? <SpinLoader /> : <></>}
+          <p className={`${textColor} text-sm`}>
+            New user? {" "}
             <Link
               to="/create-account"
               className="text-primary font-bold hover:text-purple-600"
@@ -124,7 +136,9 @@ const Login = () => {
           </p>
         </div>
       </div>
-      {showMessage && <DisplayMessage message={showMessage} setMessage={setMessage}/>}
+      {showMessage && (
+        <DisplayMessage message={showMessage} setMessage={setMessage} />
+      )}
     </div>
   );
 };

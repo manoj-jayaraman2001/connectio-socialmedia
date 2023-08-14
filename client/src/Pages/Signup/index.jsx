@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import DisplayMessage from "../../components/DisplayMessage";
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,8 @@ const Signup = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showMessage, setMessage] = useState(null)
+  const isDark = useSelector(state => state.mode === 'dark')
+  const textColor = isDark ? 'text-gray-300' : 'text-gray-800'
   const navigate = useNavigate();
   function handleChange(event) {
     const { name, value } = event.target;
@@ -46,20 +49,20 @@ const Signup = () => {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center bg-bgcolor">
+    <div className={`flex h-screen items-center justify-center ${isDark ? 'bg-bgDark' : 'bg-bgcolor'}`}>
       <div className="flex flex-col items-center gap-6 p-2 rounded-lg">
         <div className="flex flex-col items-center gap-2">
           <img src={logo} alt="Social-Pulse" className="w-36 h-36" />
           <p className="font-jsans text-xl font-semibold text-primary mb-2">
             Connectio
           </p>
-          <p className="mb-6">Create your Account</p>
+          <p className={`${textColor} mb-6`}>Create your Account</p>
           <form className="flex flex-col font-nunito gap-2" onSubmit={handleSignup}>
-            <label className="text-sm" htmlFor="firstName">
+            <label className={`${textColor} text-sm`} htmlFor="firstName">
               First Name
             </label>
             <input
-              className="p-2 border border-gray-300 rounded outline-primary"
+              className={`${isDark ? 'bg-gray-700' : ''} ${textColor} p-2 border border-gray-300 rounded outline-primary`}
               type="text"
               id="firstName"
               name="firstName"
@@ -68,11 +71,11 @@ const Signup = () => {
               onChange={handleChange}
               required
             />
-            <label className="text-sm" htmlFor="lastName">
+            <label className={`${textColor} text-sm`} htmlFor="lastName">
               Last Name
             </label>
             <input
-              className="p-2 border border-gray-300 rounded outline-primary"
+              className={`${isDark ? 'bg-gray-700' : ''} ${textColor} p-2 border border-gray-300 rounded outline-primary`}
               type="text"
               id="lastName"
               name="lastName"
@@ -81,11 +84,11 @@ const Signup = () => {
               onChange={handleChange}
               required
             />
-            <label className="text-sm" htmlFor="email">
+            <label className={`${textColor} text-sm`} htmlFor="email">
               Email
             </label>
             <input
-              className="p-2 border border-gray-300 rounded outline-primary"
+              className={`${isDark ? 'bg-gray-700' : ''} ${textColor} p-2 border border-gray-300 rounded outline-primary`}
               type="email"
               id="email"
               name="email"
@@ -94,12 +97,12 @@ const Signup = () => {
               onChange={handleChange}
               required
             />
-            <label className="text-sm" htmlFor="password">
+            <label className={`${textColor} text-sm`} htmlFor="password">
               Password
             </label>
             <div className="relative flex items-center">
               <input
-                className="p-2 border border-gray-300 outline-primary w-60 pr-10"
+                className={`${isDark && 'bg-gray-700'} ${textColor} p-2 border border-gray-300 outline-primary w-60 pr-10`}
                 type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
@@ -128,8 +131,8 @@ const Signup = () => {
             </button>
           </form>
 
-          <p className="text-sm mt-4">
-            Already have an account?{" "}
+          <p className={`${textColor} text-sm mt-4`}>
+            Already have an account?{'   '}
             <Link
               to="/"
               className="text-primary font-bold hover:text-purple-600"

@@ -8,6 +8,7 @@ const Posts = ({ userId, isProfile}) => {
   const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
   const [Loading, setLoading] = useState(false)
+  const isDark = useSelector(state => state.mode === 'dark')
   const getPosts = async () => {
     setLoading(true)
     const response = await fetch("http://localhost:3000/posts", {
@@ -54,7 +55,7 @@ const Posts = ({ userId, isProfile}) => {
 
   if(posts.length === 0){
     return(
-      <div className="p-6 bg-white rounded text-center h-screen">
+      <div className={`p-6 ${isDark ? 'bg-bgDarkWidget' : 'bg-white'} rounded-lg text-center h-screen`}>
         <p className="font-LatoFont text-gray-400">No Posts to show</p>
       </div>
     )
