@@ -64,9 +64,9 @@ const FriendListComponent = ({ userId }) => {
 
   return (
     <div
-      className={`p-4 h-max ${
+      className={`p-5 ${
         isDark ? "bg-bgDarkWidget" : "bg-white"
-      } shadow-md rounded-lg mt-2`}
+      } shadow-md rounded-lg mb-2 sm:min-w-max`}
     >
       <h2 className={`text-xl font-semibold mb-6 font-LatoFont ${textColor}`}>
         Friends

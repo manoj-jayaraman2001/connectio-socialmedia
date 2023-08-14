@@ -29,7 +29,7 @@ const ProfilePage = () => {
   }, []);
   if (!user)
     return (
-      <div className="h-screen flex items-center justify-center">
+      <div className={`h-screen flex items-center justify-center ${isDark ? "bg-bgDark" : "bg-white"}`}>
         <SpinLoader />
       </div>
     );
@@ -37,9 +37,9 @@ const ProfilePage = () => {
     <div className={isDark ? 'bg-bgDark' : 'bg-bgcolor'}>
       <Navbar />
       <div className="flex flex-col md:flex-row md:justify-center md:items-start mt-1 md:gap-5 p-2 min-h-screen max-h-full">
-        <div className="hidden md:block max-w-sm">
+        <div className="xs:w-full sm:flex sm:justify-center sm:gap-4 md:block md:w-max">
           <UserWidget userInfo={user} isProfile />
-          <FriendListComponent userId={userId} />
+          <FriendListComponent userId={userId}  />
         </div>
         <div className="sm:w-full md:w-1/2 xl:w-1/3">
           <Posts userId={userId} isProfile={true} />

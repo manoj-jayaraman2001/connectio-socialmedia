@@ -14,7 +14,7 @@ const UserWidget = ({ userInfo, isProfile }) => {
 
   const textColor = isDark ? 'text-gray-200' : 'text-gray-500'
   return (
-    <div className={`${isDark ? 'bg-bgDarkWidget' : 'bg-white'} p-4 rounded-lg shadow-md w-max`}>
+    <div className={`${isDark ? 'bg-bgDarkWidget' : 'bg-white'} p-4 rounded-lg shadow-md xs:w-full md:min-wd-max mb-2`}>
       <div className="flex items-center gap-6">
         <div>
           <ProfilePic dimension={"h-16 w-16"} picturePath={profileImg} />
@@ -53,7 +53,7 @@ const UserWidget = ({ userInfo, isProfile }) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-2 mt-4 pr-16">
+      <div className="flex flex-col gap-2 mt-4 pr-16 md:pr-10">
         <div className="flex items-center">
           <span className={`text-sm ${textColor}`}>Relationship Status:</span>
           <span className="ml-auto font-jsans text-sm text-primary">
