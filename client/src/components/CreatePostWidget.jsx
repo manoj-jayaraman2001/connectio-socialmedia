@@ -54,7 +54,7 @@ const CreatePost = ({ picturePath }) => {
 
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
-    accept: "image/*",
+    "image/png": [".png", ".jpg",".avif"],
     onDrop,
   });
 

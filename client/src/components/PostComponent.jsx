@@ -28,10 +28,11 @@ const PostComponent = ({
   const likeCount = Object.keys(likes).length;
   const isDark = useSelector((state) => state.mode === "dark");
   const textColor = isDark ? 'text-gray-200' : 'text-gray-900'
+
   // ---------------format Time-------------------- //
   function formatDate(date) {
     const momentDate = moment(date);
-
+    
     if (momentDate.isSame(moment(), "day")) {
       return "today";
     } else if (momentDate.isSame(moment().subtract(1, "days"), "day")) {

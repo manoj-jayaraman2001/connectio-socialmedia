@@ -164,7 +164,7 @@ export default function Navbar() {
             title="Change Theme"
             onClick={() => {
               dispatch(
-                setMode((mode) => (mode === "light" ? "dark" : "light"))
+                setMode()
               );
             }}
           >

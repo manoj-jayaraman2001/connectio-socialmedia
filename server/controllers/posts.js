@@ -30,10 +30,7 @@ const createPost = async (req, res) => {
 
 const getFeedPosts = async (req, res) => {
   try {
-    const options = {
-      createdAt: -1
-    }
-    const posts = await Post.find()
+    const posts = await Post.find().sort({createdAt: -1})
     res.status(200).json(posts);
   } catch (err) {
     res.status(404).json({ message: err.message });

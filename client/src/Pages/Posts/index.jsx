@@ -93,7 +93,7 @@ const Posts = ({ userId, isProfile}) => {
         )
       )}
     </div>
-
+    
   );
 };
 
