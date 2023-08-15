@@ -59,7 +59,7 @@ const CreatePost = ({ picturePath }) => {
   });
 
   return (
-    <div className={`p-4  rounded ${isDark ? 'bg-bgDarkWidget' : 'bg-white'} sm:w-full md:w-1/3`}>
+    <div className={`p-4  rounded ${isDark ? 'bg-bgDarkWidget' : 'bg-white'} sm:w-full md:min-w-1/3`}>
       <div className="flex items-center space-x-4">
         {/* UserImage component */}
         <ProfilePic dimension={"h-10 w-10"} picturePath={profileImg} />

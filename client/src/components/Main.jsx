@@ -4,9 +4,9 @@ import Posts from "../Pages/Posts";
 
 const Main = () => {
     return (
-      <div id="main" className="max-w-xl">
+      <div id="main" className="sm:w-full md:max-w-xl">
         <CreatePost />
-        <div className="max-w-xl mt-3 ">
+        <div className="sm:w-full md:max-w-xl mt-3 ">
           <Posts />
         </div>
       </div>
